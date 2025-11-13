@@ -1,4 +1,5 @@
 import { useEffect, useState, type MouseEvent } from "react";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
 import { useI18n, type Language } from "../i18n";
 
@@ -62,7 +63,7 @@ const Navigation = () => {
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-900/80 backdrop-blur">
-      <div className="container relative mx-auto flex items-center justify-between gap-6 px-6 py-4 sm:px-12">
+      <div className="container relative mx-auto flex items-center justify-between gap-4 px-6 py-4 sm:px-12">
         <a
           href="#hero"
           className="flex items-center gap-3 text-emerald-200 transition hover:text-white"
@@ -76,6 +77,8 @@ const Navigation = () => {
             PANN CARBON
           </span>
         </a>
+        
+        {/* Desktop Navigation */}
         <div className="hidden items-center gap-6 md:flex">
           {!isHome && (
             <a
@@ -86,36 +89,6 @@ const Navigation = () => {
               {t("nav.backToHome")}
             </a>
           )}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setIsMenuOpen((prev) => !prev)}
-              className={`rounded-full border border-emerald-300/40 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide transition ${
-                isMenuOpen
-                  ? "bg-emerald-400 text-slate-900"
-                  : "text-emerald-200 hover:text-white"
-              }`}
-            >
-              {t("menu.label")}
-            </button>
-            {isMenuOpen && (
-              <div className="absolute right-0 mt-3 w-48 rounded-2xl border border-slate-700/60 bg-slate-900/95 p-4 shadow-lg shadow-emerald-500/10">
-                <ul className="space-y-2 text-sm text-slate-200">
-                  {menuLinks.map((item) => (
-                    <li key={item.label}>
-                      <a
-                        href={item.href}
-                        onClick={(event) => handleMenuLinkClick(event, item.href)}
-                        className="flex items-center rounded-lg px-2 py-1.5 transition hover:bg-slate-800 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
           <div className="flex rounded-full border border-emerald-300/40 bg-slate-900/60 p-1 shadow-sm shadow-emerald-300/20">
             {languages.map((lang) => (
               <button
@@ -135,36 +108,85 @@ const Navigation = () => {
               </button>
             ))}
           </div>
-        </div>
-      </div>
-      <div className="space-y-3 bg-slate-900/90 px-4 py-3 text-xs font-semibold text-slate-200 md:hidden">
-        {!isHome && (
-          <div className="flex justify-center">
-            <a
-              href="/"
-              onClick={handleBackHome}
-              className="rounded-full border border-emerald-300/40 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-200 transition hover:text-white"
-            >
-              {t("nav.backToHome")}
-            </a>
-          </div>
-        )}
-        <div className="flex justify-center gap-2">
           <div className="relative">
             <button
               type="button"
               onClick={() => setIsMenuOpen((prev) => !prev)}
-              className={`rounded-full border border-emerald-300/40 px-3 py-1 text-xs font-semibold uppercase transition ${
+              className={`rounded-full border border-emerald-300/40 p-2.5 transition ${
                 isMenuOpen
                   ? "bg-emerald-400 text-slate-900"
                   : "text-emerald-200 hover:text-white"
               }`}
+              aria-label="Menu"
             >
-              {t("menu.label")}
+              <Bars3Icon className="h-5 w-5" />
             </button>
             {isMenuOpen && (
-              <div className="absolute right-0 mt-2 w-44 rounded-2xl border border-slate-700/60 bg-slate-900/95 p-3 text-left shadow-lg shadow-emerald-500/10">
-                <ul className="space-y-2 text-slate-200">
+              <div className="absolute right-0 mt-3 w-48 rounded-2xl border border-slate-700/60 bg-slate-900/95 p-4 shadow-lg shadow-emerald-500/10">
+                <ul className="space-y-2 text-sm text-slate-200">
+                  {menuLinks.map((item) => (
+                    <li key={item.label}>
+                      <a
+                        href={item.href}
+                        onClick={(event) => handleMenuLinkClick(event, item.href)}
+                        className="flex items-center rounded-lg px-2 py-1.5 transition hover:bg-slate-800 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile Navigation - Top Right */}
+        <div className="flex items-center gap-2 md:hidden">
+          <div className="flex rounded-full border border-emerald-300/40 bg-slate-900/60 p-1 shadow-sm shadow-emerald-300/20">
+            {languages.map((lang) => (
+              <button
+                key={lang}
+                type="button"
+                onClick={() => {
+                  setLanguage(lang);
+                  setIsMenuOpen(false);
+                }}
+                className={`px-2.5 py-1 text-xs font-semibold uppercase transition ${
+                  language === lang
+                    ? "rounded-full bg-emerald-400 text-slate-900"
+                    : "text-emerald-200 hover:text-white"
+                }`}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
+          </div>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              className={`rounded-full border border-emerald-300/40 p-2.5 transition ${
+                isMenuOpen
+                  ? "bg-emerald-400 text-slate-900"
+                  : "text-emerald-200 hover:text-white"
+              }`}
+              aria-label="Menu"
+            >
+              <Bars3Icon className="h-5 w-5" />
+            </button>
+            {isMenuOpen && (
+              <div className="absolute right-0 mt-2 w-44 rounded-2xl border border-slate-700/60 bg-slate-900/95 p-3 shadow-lg shadow-emerald-500/10">
+                {!isHome && (
+                  <a
+                    href="/"
+                    onClick={handleBackHome}
+                    className="mb-2 block rounded-lg px-2 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-slate-800 hover:text-white"
+                  >
+                    {t("nav.backToHome")}
+                  </a>
+                )}
+                <ul className="space-y-2 text-sm text-slate-200">
                   {menuLinks.map((item) => (
                     <li key={item.label}>
                       <a
@@ -180,23 +202,6 @@ const Navigation = () => {
               </div>
             )}
           </div>
-          {languages.map((lang) => (
-            <button
-              key={lang}
-              type="button"
-              onClick={() => {
-                setLanguage(lang);
-                setIsMenuOpen(false);
-              }}
-              className={`rounded-full border border-emerald-300/40 px-3 py-1 text-xs font-semibold uppercase transition ${
-                language === lang
-                  ? "bg-emerald-400 text-slate-900"
-                  : "text-emerald-200 hover:text-white"
-              }`}
-            >
-              {lang.toUpperCase()}
-            </button>
-          ))}
         </div>
       </div>
     </header>
