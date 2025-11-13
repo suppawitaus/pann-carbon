@@ -12,19 +12,6 @@ const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [pathname, setPathname] = useState<string>(getPathname);
 
-  const links = [
-    { href: "#hero", label: t("nav.hero") },
-    { href: "#problem", label: t("nav.problem") },
-    { href: "#solution", label: t("nav.solution") },
-    { href: "#flow", label: t("nav.flow") },
-    { href: "#market", label: t("nav.market") },
-    { href: "#business", label: t("nav.business") },
-    { href: "#differentiation", label: t("nav.differentiation") },
-    { href: "#impact", label: t("nav.impact") },
-    { href: "#future", label: t("nav.future") },
-    { href: "#team", label: t("nav.team") },
-  ];
-
   const menuLinks = [
     { href: "/technology", label: t("menu.items.technology") },
     { href: "/business-market", label: t("menu.items.businessMarket") },
@@ -90,19 +77,6 @@ const Navigation = () => {
           </span>
         </a>
         <div className="hidden items-center gap-6 md:flex">
-          {isHome && (
-            <nav className="flex items-center gap-6 text-sm font-medium text-slate-200">
-              {links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="transition hover:text-white"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-          )}
           {!isHome && (
             <a
               href="/"
@@ -164,19 +138,6 @@ const Navigation = () => {
         </div>
       </div>
       <div className="space-y-3 bg-slate-900/90 px-4 py-3 text-xs font-semibold text-slate-200 md:hidden">
-        {isHome && (
-          <nav className="flex flex-wrap items-center justify-center gap-3">
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rounded-full border border-white/10 px-3 py-1 transition hover:border-white hover:text-white"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-        )}
         {!isHome && (
           <div className="flex justify-center">
             <a
